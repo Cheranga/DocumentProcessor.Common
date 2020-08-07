@@ -30,11 +30,23 @@ stages:
     steps:
     - template: 'build.yaml'      
 
-- stage: DEV  
+stages:
+- stage: Build
+  jobs:
+  - job: 'Build'
+    pool:
+      vmImage: ${{variables.vmImage}}
+    steps:
+    - template: 'buildandpublish.yaml'
+      parameters:        
+        projectFiles: '**/*.csproj'
+
+- stage: DEV
+  dependsOn: ['Build']
   jobs:
   - deployment: DEV
     variables:
-    - template: 'variables/dev.yaml'  
+    - template: 'variables/dev.yaml'
     pool:
         vmImage: ${{variables.vmImage}}
     environment: DocumentProcessorCommon-DEV
