@@ -22,6 +22,14 @@ variables:
   value: 'windows-latest'
 
 stages:
+- stage: Build
+  jobs:
+  - job: 'Build'
+    pool:
+      vmImage: ${{variables.vmImage}}
+    steps:
+    - template: 'build.yaml'      
+
 - stage: DEV  
   jobs:
   - deployment: DEV

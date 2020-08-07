@@ -1,0 +1,3 @@
+- publish: $(Build.Repository.LocalPath)/Deploy
+  displayName: Copy ARM Templates
+  artifact: deploy  
