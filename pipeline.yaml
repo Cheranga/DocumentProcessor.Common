@@ -28,15 +28,6 @@ stages:
     pool:
       vmImage: ${{variables.vmImage}}
     steps:
-    - template: 'build.yaml'      
-
-stages:
-- stage: Build
-  jobs:
-  - job: 'Build'
-    pool:
-      vmImage: ${{variables.vmImage}}
-    steps:
     - template: 'buildandpublish.yaml'
       parameters:        
         projectFiles: '**/*.csproj'
