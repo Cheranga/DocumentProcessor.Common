@@ -1,0 +1,37 @@
+name: $(Date:yyyyMMdd).$(Rev:r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+    - feature/*
+
+  paths:
+    exclude:
+     - doc
+     - ReadME.md
+
+pr:
+  branches:
+    include:
+    - master
+
+variables:
+- name: vmImage
+  value: 'windows-latest'
+
+stages:
+- stage: DEV  
+  jobs:
+  - deployment: DEV
+    variables:
+    - template: 'variables/dev.yaml'  
+    pool:
+        vmImage: ${{variables.vmImage}}
+    environment: DocumentProcessorCommon-DEV
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: 'deploy.yaml'
